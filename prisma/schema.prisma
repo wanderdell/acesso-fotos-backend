@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserRegistration {
+  id               Int                @id
+  email            String             @unique
+  password_usr     String
+  createdAt_usr    DateTime           @default(now())
+  updatedAt_usr    DateTime           @updatedAt
+  TabMenu          TabMenu[]
+  ClientAlbum      CustomerContract[]
+  Logs             Logs[]
+  RecordAlbum      RecordAlbum[]
+  RecordAlbumPhoto RecordAlbumPhoto[]
+}
+
+model TabMenu {
+  id          Int              @id
+  name        String
+  description String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  user_id     Int
+  user        UserRegistration @relation(fields: [user_id], references: [id])
+}
+
+model CustomerContract {
+  id           Int              @id @default(autoincrement())
+  client       String
+  event_date   DateTime
+  delivey_date DateTime
+  id_anexo     Int
+  event_place  String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  user_id      Int
+  user         UserRegistration @relation(fields: [user_id], references: [id])
+}
+
+model Logs {
+  id       Int              @id @default(autoincrement())
+  user_log String
+  type_log String
+  user_id  Int
+  user     UserRegistration @relation(fields: [user_id], references: [id])
+}
+
+model RecordAlbumPhoto {
+  id           Int              @id
+  photo_id     Int
+  photo_desc   String
+  photo_widh   String
+  photo_height String
+  photo_size   String
+  photo_order  String
+  photo_Date   DateTime
+  photo_lat    String
+  photo_long   String
+  user_id      Int
+  user         UserRegistration @relation(fields: [user_id], references: [id])
+  RecordAlbum  RecordAlbum[]
+}
+
+model RecordAlbum {
+  id           Int              @id
+  description  String
+  observation  String
+  delivey_date DateTime
+  album_date   DateTime
+  situation    Int
+  user_id      Int
+  user         UserRegistration @relation(fields: [user_id], references: [id])
+  album_id     Int
+  album        RecordAlbumPhoto @relation(fields: [album_id], references: [id])
+}
