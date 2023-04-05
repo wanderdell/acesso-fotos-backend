@@ -11,26 +11,41 @@ datasource db {
 }
 
 model UserRegistration {
-  id               Int                @id
+  id_usr           Int                @id
   email            String             @unique
   password_usr     String
   createdAt_usr    DateTime           @default(now())
   updatedAt_usr    DateTime           @updatedAt
+  user_insert      String
+  date_insert      DateTime           @default(now())
+  user_update      String
+  data_update      DateTime           @default(now())
+  id_admin         Int
   TabMenu          TabMenu[]
   ClientAlbum      CustomerContract[]
   Logs             Logs[]
   RecordAlbum      RecordAlbum[]
-  RecordAlbumPhoto RecordAlbumPhoto[]
+  RecordAlbumPhoto RecordPhoto[]
+  Situation        Situation[]
 }
 
 model TabMenu {
-  id          Int              @id
-  name        String
-  description String
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  user_id     Int
-  user        UserRegistration @relation(fields: [user_id], references: [id])
+  id_menu              Int                    @id
+  name                 String
+  description          String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  user_id              Int
+  user                 UserRegistration       @relation(fields: [user_id], references: [id_usr])
+  UserMenuRelationship UserMenuRelationship[]
+}
+
+model UserMenuRelationship {
+  id_rum_rum   Int     @id
+  cod_user_rum Int
+  id_client    Int
+  id_menu_rum  Int
+  menu         TabMenu @relation(fields: [id_menu_rum], references: [id_menu])
 }
 
 model CustomerContract {
@@ -43,7 +58,9 @@ model CustomerContract {
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
   user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id])
+  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
+  RecordAlbum  RecordAlbum[]
+  RecordPhoto  RecordPhoto[]
 }
 
 model Logs {
@@ -51,10 +68,10 @@ model Logs {
   user_log String
   type_log String
   user_id  Int
-  user     UserRegistration @relation(fields: [user_id], references: [id])
+  user     UserRegistration @relation(fields: [user_id], references: [id_usr])
 }
 
-model RecordAlbumPhoto {
+model RecordPhoto {
   id           Int              @id
   photo_id     Int
   photo_desc   String
@@ -66,8 +83,10 @@ model RecordAlbumPhoto {
   photo_lat    String
   photo_long   String
   user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id])
+  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
   RecordAlbum  RecordAlbum[]
+  contract_id  Int
+  contract     CustomerContract @relation(fields: [contract_id], references: [id])
 }
 
 model RecordAlbum {
@@ -78,7 +97,17 @@ model RecordAlbum {
   album_date   DateTime
   situation    Int
   user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id])
+  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
   album_id     Int
-  album        RecordAlbumPhoto @relation(fields: [album_id], references: [id])
+  album        RecordPhoto      @relation(fields: [album_id], references: [id])
+  contract_id  Int
+  contract     CustomerContract @relation(fields: [contract_id], references: [id])
+}
+
+model Situation {
+  id_situ_situ  Int              @id
+  desc_situ_sit String
+  suf_situ_situ String
+  user_id       Int
+  user          UserRegistration @relation(fields: [user_id], references: [id_usr])
 }
