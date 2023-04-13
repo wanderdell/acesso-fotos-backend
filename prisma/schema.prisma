@@ -11,103 +11,129 @@ datasource db {
 }
 
 model UserRegistration {
-  id_usr           Int                @id
-  email            String             @unique
-  password_usr     String
-  createdAt_usr    DateTime           @default(now())
-  updatedAt_usr    DateTime           @updatedAt
-  user_insert      String
-  date_insert      DateTime           @default(now())
-  user_update      String
-  data_update      DateTime           @default(now())
-  id_admin         Int
-  TabMenu          TabMenu[]
-  ClientAlbum      CustomerContract[]
-  Logs             Logs[]
-  RecordAlbum      RecordAlbum[]
-  RecordAlbumPhoto RecordPhoto[]
-  Situation        Situation[]
+  cod_user_usr          Int                     @id
+  cod_login_usr         String
+  des_user_usr          String
+  cod_email_usr         String                  @unique
+  num_fone_usr          String
+  cod_situ_usr          Int
+  usr_ins_usr           Int
+  dta_ins_usr           DateTime                @default(now())
+  usr_upd_usr           String
+  dta_upd_usr           DateTime                @default(now())
+  cod_cliente           Int
+  id_admin_usr          Int
+  TabMenu               TabMenu[]
+  ClientAlbum           CustomerContract[]
+  Logs                  Logs[]
+  RecordAlbum           RecordAlbum[]
+  RecordAlbumPhoto      RecordPhoto[]
+  UserAlbumRelationship UserAlbumRelationship[]
+  ClientRegister        ClientRegister[]
+}
+
+model ClientRegister {
+  cod_cliente_cli       Int                     @id
+  cod_login_cli         String
+  nom_cliente_cli       String
+  cod_email_cli         String
+  num_fone_cli          String
+  cod_situ_cli          Int
+  usr_ins_cli           Int
+  UserRegistration      UserRegistration        @relation(fields: [usr_ins_cli], references: [cod_user_usr])
+  dta_ins_cli           DateTime                @default(now())
+  usr_upd_cli           Int
+  dta_upd_cli           DateTime
+  UserMenuRelationship  UserMenuRelationship[]
+  ClientAlbum           CustomerContract[]
+  UserAlbumRelationship UserAlbumRelationship[]
 }
 
 model TabMenu {
-  id_menu              Int                    @id
-  name                 String
-  description          String
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime               @updatedAt
-  user_id              Int
-  user                 UserRegistration       @relation(fields: [user_id], references: [id_usr])
+  cod_menu_men         Int                    @id
+  des_menu_men         String
+  cod_cliente          Int
   UserMenuRelationship UserMenuRelationship[]
+  UserRegistration     UserRegistration       @relation(fields: [cod_cliente], references: [cod_user_usr])
 }
 
 model UserMenuRelationship {
-  id_rum_rum   Int     @id
-  cod_user_rum Int
-  id_client    Int
-  id_menu_rum  Int
-  menu         TabMenu @relation(fields: [id_menu_rum], references: [id_menu])
+  cod_rum_rum    Int            @id @default(autoincrement())
+  cod_user_rum   Int
+  cod_menu_rum   Int
+  cod_cliente    Int
+  ClientRegister ClientRegister @relation(fields: [cod_cliente], references: [cod_cliente_cli])
+  TabMenu        TabMenu        @relation(fields: [cod_menu_rum], references: [cod_menu_men])
+}
+
+model UserAlbumRelationship {
+  cod_rum_rua      Int              @id @default(autoincrement())
+  cod_user_rua     Int
+  cod_album_alb    Int
+  cod_cliente      Int
+  ClientRegister   ClientRegister   @relation(fields: [cod_cliente], references: [cod_cliente_cli])
+  cod_usuario      Int
+  UserRegistration UserRegistration @relation(fields: [cod_usuario], references: [cod_user_usr])
 }
 
 model CustomerContract {
-  id           Int              @id @default(autoincrement())
-  client       String
-  event_date   DateTime
-  delivey_date DateTime
-  id_anexo     Int
-  event_place  String
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
-  RecordAlbum  RecordAlbum[]
-  RecordPhoto  RecordPhoto[]
+  cod_cont_con     Int              @id @default(autoincrement())
+  cod_user_con     Int
+  dta_evento_con   DateTime
+  dta_entrega_con  DateTime
+  obs_cont_con     String
+  cod_anexo_con    Int
+  des_local_con    String
+  UserRegistration UserRegistration @relation(fields: [cod_user_con], references: [cod_user_usr])
+  RecordAlbum      RecordAlbum[]
+  RecordPhoto      RecordPhoto[]
+  cod_cliente_cli  Int
+  ClientRegister   ClientRegister   @relation(fields: [cod_cliente_cli], references: [cod_cliente_cli])
 }
 
 model Logs {
-  id       Int              @id @default(autoincrement())
-  user_log String
-  type_log String
-  user_id  Int
-  user     UserRegistration @relation(fields: [user_id], references: [id_usr])
+  cod_log_log      Int              @id @default(autoincrement())
+  cod_user_log     Int
+  cod_tipo_log     Int
+  dta_log_log      DateTime
+  UserRegistration UserRegistration @relation(fields: [cod_log_log], references: [cod_user_usr])
 }
 
 model RecordPhoto {
-  id           Int              @id
-  photo_id     Int
-  photo_desc   String
-  photo_widh   String
-  photo_height String
-  photo_size   String
-  photo_order  String
-  photo_Date   DateTime
-  photo_lat    String
-  photo_long   String
-  user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
-  RecordAlbum  RecordAlbum[]
-  contract_id  Int
-  contract     CustomerContract @relation(fields: [contract_id], references: [id])
+  cod_foto_caf     Int              @id
+  cod_album_caf    Int
+  des_foto_caf     String
+  tip_foto_caf     String
+  largura_caf      Int
+  altura_caf       Int
+  tamanho_caf      BigInt
+  ordem_caf        Int
+  dta_foto_caf     DateTime
+  cod_lati_caf     String
+  cod_long_caf     String
+  cod_cliente      Int
+  UserRegistration UserRegistration @relation(fields: [cod_cliente], references: [cod_user_usr])
+  RecordAlbum      RecordAlbum[]
+  contract_id      Int
+  CustomerContract CustomerContract @relation(fields: [contract_id], references: [cod_cont_con])
 }
 
 model RecordAlbum {
-  id           Int              @id
-  description  String
-  observation  String
-  delivey_date DateTime
-  album_date   DateTime
-  situation    Int
-  user_id      Int
-  user         UserRegistration @relation(fields: [user_id], references: [id_usr])
-  album_id     Int
-  album        RecordPhoto      @relation(fields: [album_id], references: [id])
-  contract_id  Int
-  contract     CustomerContract @relation(fields: [contract_id], references: [id])
+  cod_album_alb    Int              @id
+  des_album_alb    String
+  obs_album_alb    String
+  dta_evento_alb   DateTime
+  cod_situ_alb     Int
+  cod_cliente      Int
+  UserRegistration UserRegistration @relation(fields: [cod_cliente], references: [cod_user_usr])
+  album_id         Int
+  RecordPhoto      RecordPhoto      @relation(fields: [album_id], references: [cod_foto_caf])
+  contract_id      Int
+  CustomerContract CustomerContract @relation(fields: [contract_id], references: [cod_cont_con])
 }
 
 model Situation {
-  id_situ_situ  Int              @id
+  id_situ_situ  Int    @id
   desc_situ_sit String
   suf_situ_situ String
-  user_id       Int
-  user          UserRegistration @relation(fields: [user_id], references: [id_usr])
 }

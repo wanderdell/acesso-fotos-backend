@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsUUID, Length } from 'class-validator';
 
-export class CreateConstractDto {
+export class CreateContractDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
@@ -33,5 +33,5 @@ export class CreateConstractDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
-  user_id;
+  user_id: number;
 }

@@ -1,95 +1,107 @@
 import { PrismaClient } from '@prisma/client';
-import { async } from 'rxjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
   const user = await prisma.userRegistration.upsert({
-    where: { email: 'contato@yandev.com' },
+    where: { cod_user_usr: 1 },
     update: {},
     create: {
-      id: 1,
-      email: 'contato@yandev.com',
-      password_usr: '123456',
-      createdAt_usr: new Date(),
-      updatedAt_usr: new Date(),
+      cod_user_usr: 1,
+      cod_email_usr: 'contato@email.com',
+      cod_login_usr: 'YanDev',
+      cod_situ_usr: 1,
+      des_user_usr: 'YanDev',
+      id_admin_usr: 1,
+      num_fone_usr: '11999999999',
+      usr_ins_usr: 1,
+      usr_upd_usr: 'YanDev',
+      dta_ins_usr: new Date(),
+      cod_cliente: 1,
     },
   });
 
   const menu = await prisma.tabMenu.upsert({
-    where: { id: 1 },
+    where: { cod_menu_men: 1 },
     update: {},
     create: {
-      id: 1,
-      name: 'Photos',
-      description: '',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      user_id: 1,
+      cod_menu_men: 1,
+      des_menu_men: 'Photos',
+      cod_cliente: 1,
+    },
+  });
+
+  const user_menu = await prisma.userMenuRelationship.upsert({
+    where: { cod_rum_rum: 1 },
+    update: {},
+    create: {
+      cod_rum_rum: 1,
+      cod_user_rum: 1,
+      cod_menu_rum: 1,
+      cod_cliente: 1,
     },
   });
 
   const contract = await prisma.customerContract.upsert({
-    where: { id: 1 },
+    where: { cod_cont_con: 1 },
     update: {},
     create: {
-      id: 1,
-      client: 'YanDev',
-      event_date: new Date(),
-      delivey_date: new Date(),
-      id_anexo: 1,
-      event_place: 'São Paulo',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      user_id: 1,
+      cod_cont_con: 1,
+      cod_user_con: 1,
+      dta_evento_con: new Date(),
+      dta_entrega_con: new Date(),
+      obs_cont_con: 'asdasdasd',
+      cod_anexo_con: 1,
+      des_local_con: 'RUA FARIA LIMA',
+      cod_cliente_cli: 1,
     },
   });
 
   const log = await prisma.logs.upsert({
-    where: { id: 1 },
+    where: { cod_log_log: 1 },
     update: {},
     create: {
-      id: 1,
-      user_log: 'YanDev',
-      type_log: 'Login',
-      user_id: 1,
+      cod_log_log: 1,
+      cod_user_log: 1,
+      cod_tipo_log: 1,
+      dta_log_log: new Date(),
     },
   });
 
-  const photo = await prisma.recordAlbumPhoto.upsert({
-    where: { id: 1 },
+  const photos = await prisma.recordPhoto.upsert({
+    where: { cod_foto_caf: 1 },
     update: {},
     create: {
-      id: 1,
-      photo_id: 1,
-      photo_desc: 'Foto de teste',
-      photo_widh: '100px',
-      photo_height: '100px',
-      photo_size: '100gb',
-      photo_order: '1',
-      photo_Date: new Date(),
-      photo_lat: '123',
-      photo_long: '123',
-      user_id: 1,
+      cod_foto_caf: 1,
+      cod_album_caf: 1,
+      des_foto_caf: 'Foto de teste',
+      tip_foto_caf: '100px',
+      largura_caf: 1,
+      altura_caf: 1,
+      tamanho_caf: 123123,
+      ordem_caf: 1,
+      dta_foto_caf: new Date(),
+      cod_lati_caf: '123',
+      cod_long_caf: '123',
+      cod_cliente: 1,
+      contract_id: 1,
     },
   });
 
   const album = await prisma.recordAlbum.upsert({
-    where: { id: 1 },
+    where: { cod_album_alb: 1 },
     update: {},
     create: {
-      id: 1,
-      description: 'Album de teste',
-      observation: 'Observação de teste',
-      delivey_date: new Date(),
-      album_date: new Date(),
-      situation: 1,
-      user_id: 1,
+      cod_album_alb: 1,
+      des_album_alb: 'Album de teste',
+      obs_album_alb: 'Observação de teste',
+      dta_evento_alb: new Date(),
       album_id: 1,
+      contract_id: 1,
+      cod_situ_alb: 1,
+      cod_cliente: 1,
     },
   });
-
-  console.log({ user, menu, contract, log, photo, album });
 }
 
 main()

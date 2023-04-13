@@ -1,40 +1,35 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsUUID, Length } from 'class-validator';
+
 export class CreateAlbumDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
-  id: number;
+  cod_album_alb: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @Length(5, 240)
-  description: string;
+  des_album_alb: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @Length(5, 240)
-  observation: string;
+  obs_album_alb: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  @Length(5, 240)
-  delivey_date: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Length(5, 240)
-  album_date: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Length(5, 240)
-  situation: number;
+  dta_evento_alb: Date;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsUUID()
-  user_id: number;
+  cod_situ_alb: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @Length(5, 240)
+  cod_cliente: number;
 
   @ApiProperty()
   @IsNotEmpty()
