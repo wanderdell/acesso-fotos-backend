@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Entity, Unique, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-@Unique(['id'])
+@Unique(['cod_album_alb'])
 export class cad_album implements RecordAlbum {
   @PrimaryGeneratedColumn('uuid')
   @ApiProperty()

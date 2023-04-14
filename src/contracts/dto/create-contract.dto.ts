@@ -1,37 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsUUID, Length } from 'class-validator';
 
 export class CreateContractDto {
   @ApiProperty()
-  @IsNotEmpty()
-  @IsUUID()
-  id: number;
+  cod_cont_con: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @Length(5, 240)
-  client: string;
+  cod_user_con: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  event_date: Date;
+  dta_evento_con: Date;
 
   @ApiProperty()
-  @IsNotEmpty()
-  delivey_date: Date;
+  dta_entrega_con: Date;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsUUID()
-  id_anexo: number;
+  obs_cont_con: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @Length(5, 240)
-  event_place: string;
+  cod_anexo_con: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsUUID()
-  user_id: number;
+  des_local_con: string;
+
+  @ApiProperty()
+  cod_cliente_cli: number;
 }

@@ -8,23 +8,25 @@ export class MenuService {
   constructor(private prisma: PrismaService) {}
 
   create(createMenuDto: CreateMenuDto) {
-    // return this.prisma.tabMenu.create({ data: createMenuDto });
-    return;
+    return this.prisma.tabMenu.create({ data: createMenuDto });
   }
 
   findAll() {
     return this.prisma.tabMenu.findMany();
   }
 
-  findOne(id_menu: number) {
-    // return this.prisma.tabMenu.findUnique({ where: id_menu });
+  findOne(id: number) {
+    return this.prisma.tabMenu.findUnique({ where: { cod_menu_men: id } });
   }
 
   update(id: number, updateMenuDto: UpdateMenuDto) {
-    return `This action updates a #${id} menu`;
+    return this.prisma.tabMenu.update({
+      where: { cod_menu_men: id },
+      data: updateMenuDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} menu`;
+    return this.prisma.tabMenu.delete({ where: { cod_menu_men: id } });
   }
 }

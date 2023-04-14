@@ -1,8 +1,10 @@
 import { CustomerContract } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
-export class cad_album implements CustomerContract {
+@Entity()
+@Unique(['cod_cont_con'])
+export class cad_contrato implements CustomerContract {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   cod_cont_con: number;

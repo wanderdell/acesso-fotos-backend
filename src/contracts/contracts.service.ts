@@ -16,17 +16,19 @@ export class ContractsService {
   }
 
   findOne(id: number) {
-    return this.prisma.customerContract.findUnique({ where: { id } });
+    return this.prisma.customerContract.findUnique({
+      where: { cod_cont_con: id },
+    });
   }
 
   update(id: number, updateContractDto: UpdateContractDto) {
     return this.prisma.customerContract.update({
-      where: { id },
+      where: { cod_cont_con: id },
       data: updateContractDto,
     });
   }
 
   remove(id: number) {
-    return this.prisma.customerContract.delete({ where: { id } });
+    return this.prisma.customerContract.delete({ where: { cod_cont_con: id } });
   }
 }

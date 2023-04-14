@@ -1,7 +1,9 @@
 import { UserRegistration } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
+@Entity()
+@Unique(['cod_user_usr'])
 export class cad_usuario implements UserRegistration {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')

@@ -16,17 +16,19 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.prisma.userRegistration.findUnique({ where: { id } });
+    return this.prisma.userRegistration.findUnique({
+      where: { cod_user_usr: id },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.prisma.userRegistration.update({
-      where: { id },
+      where: { cod_user_usr: id },
       data: updateUserDto,
     });
   }
 
   remove(id: number) {
-    return this.prisma.userRegistration.delete({ where: { id } });
+    return this.prisma.userRegistration.delete({ where: { cod_user_usr: id } });
   }
 }
